@@ -5,10 +5,10 @@ display_individual_dates = True  # Entries in bullet points if False
 compact_view = True  # Entries on the same line as the dates (N/A for lists or if using bullet points)
 
 # Daily notes directory (note title must have full date info)
-daily_folder = '/Users/username/Obsidian/My Vault/Daily'
+daily_folder = '/Users/user/Obsidian/My Vault/Daily'
 
 # Summary of header will go here (header_name.md)
-report_folder = '/Users/username/Obsidian/My Vault/Journal Reports'
+report_folder = '/Users/user/Obsidian/My Vault/Daily Summary'
 
 ####################################################
 
@@ -55,9 +55,9 @@ for i, file in enumerate(ordered_files):
     if len(content.replace('\n', '')) > 0:
 
         if last_year != this_year:
-            contents.append('<h3>{}</h3>\n'.format(this_year))
+            contents.append('<h2>{}</h2>\n'.format(this_year))
         if last_month != this_month:
-            contents.append('<h4>{}</h4>\n'.format(calendar.month_name[int(this_month)]))
+            contents.append('<h3>{}</h3>\n'.format(calendar.month_name[int(this_month)]))
 
         last_year = this_year
         last_month = this_month
@@ -70,7 +70,7 @@ for i, file in enumerate(ordered_files):
                 contents.append("<b>{}</b>: {}".format(dt, content))
                 # contents.append("{}: {}".format(dt, content))
             else:
-                contents.append("<h5>{}</h5>{}\n".format(dt, content))
+                contents.append("<h4>{}</h4>{}\n".format(dt, content))
         else:
             # Convert paragraphs into bullet points
             content = content.replace('<p>', '<ul>\n<li>')
@@ -82,11 +82,11 @@ if len(contents) == 0:
 
 # Put everything together
 
-all_contents = '<h2>Summary - {}</h2>\n{}'.format(header_name, ''.join(contents))
+all_contents = '<h1>Summary - {}</h1>\n{}'.format(header_name, ''.join(contents))
 text_md = hm.markdownify(all_contents)  # Convert html to markdown
 
 # Generate summary note
 
-filename = "{}/Summary: {}.md".format(report_folder, header_name)
+filename = "{}/Summary - {}.md".format(report_folder, header_name)
 with open(filename, 'w') as f:
     f.write(text_md)

@@ -1,17 +1,16 @@
 #### Settings ######################################
 
 # Daily notes directory (note title must have year, month and day)
-daily_folder = '/Users/risno/OneDrive - NERC/Obsidian/My Vault/Daily'
+daily_folder = '/Users/user/Obsidian/My Vault/Daily'
 
 # Looks under the following header in each daily note (may not work well if it has sub-headers under it)
 header_name = 'Habits'
 
 # Habits you want in the habit tracker table
 habits_tracked = ['Sleep 8h', 'Exercise', 'Learn French', 'Meditate']
-habits_tracked = ['Sleep', 'Exercise', 'French', 'Meditate', 'Cat play', 'Call parents']
 
 # Summary of header will go here (saved as Summary - header_name.md)
-report_folder = '/Users/risno/OneDrive - NERC/Obsidian/My Vault/Journal Reports'
+report_folder = '/Users/user/Obsidian/My Vault/Daily Summary'
 
 ####################################################
 
@@ -101,7 +100,7 @@ for ym, habit_dict_split in ym_split.items():
 
 # Reverse order of contents (newest at the top) and put everything together
 
-text_md = hm.markdownify('<h2>{}</h2>\n'.format(header_name)) + '\n' + ''.join(sections[::-1])
+text_md = hm.markdownify('<h2>Summary - {}</h2>\n'.format(header_name)) + '\n' + ''.join(sections[::-1])
 
 # Generate summary note
 
