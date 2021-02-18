@@ -1,9 +1,13 @@
 #### Settings ######################################
 
-daily_folder = '/Users/user/Obsidian/My Vault/Daily'  # (1)
-header_name = 'Habits'  # (2)
-habits_tracked = ['Sleep 8h', 'Exercise', 'Learn French', 'Meditate']  # (3)
-report_folder = '/Users/user/Obsidian/My Vault/Daily Summary'  # (4)
+# (1)
+daily_folder = '/Users/user/Obsidian/My Vault/Daily'
+# (2)
+header_name = 'Habits'
+# (3)
+habits_tracked = ['Sleep 8h', 'Exercise', 'Learn French', 'Meditate']
+# (4)
+report_folder = '/Users/user/Obsidian/My Vault/Daily Summary'
 
 # Description
 # (1) Daily notes directory (note title must have year, month and day)

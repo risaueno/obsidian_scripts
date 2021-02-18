@@ -1,11 +1,17 @@
 #### Settings ######################################
 
-header_name = 'To do'  # (1)
-daily_folder = '/Users/user/Obsidian/My Vault/Daily'  # (2)
-report_folder = '/Users/user/Obsidian/My Vault/Daily Summary'  # (3)
-display_transclusion = True  # (4)
-display_individual_dates = True  # (5)
-compact_view = True  # (6)
+# (1)
+header_name = 'To do'
+# (2)
+daily_folder = '/Users/user/Obsidian/My Vault/Daily'
+# (3)
+report_folder = '/Users/user/Obsidian/My Vault/Daily Summary'
+# (4)
+display_transclusion = True
+# (5)
+display_individual_dates = True
+# (6)
+compact_view = True
 
 # Description
 # (1) Name of header you want to summarise (make sure this exists in your dailies)
