@@ -51,6 +51,7 @@ for i, file in enumerate(ordered_files):
 
     content = extract_content_from_header(html, header_name)
 
+    # If content exists
     if len(content.replace('\n', '')) > 0:
 
         if last_year != this_year:
@@ -63,13 +64,15 @@ for i, file in enumerate(ordered_files):
 
         if display_individual_dates:
             if compact_view:
-                if content[:1] == '\n':
+                # Display on the same line if content is short
+                if content.count('\n') <= 2 and content[:1] == '\n':
                     content = content[1:]
                 contents.append("<b>{}</b>: {}".format(dt, content))
                 # contents.append("{}: {}".format(dt, content))
             else:
                 contents.append("<h5>{}</h5>{}\n".format(dt, content))
         else:
+            # Convert paragraphs into bullet points
             content = content.replace('<p>', '<ul>\n<li>')
             content = content.replace('</p>', '</li>\n</ul>')
             contents.append("{}\n".format(content))
@@ -77,8 +80,13 @@ for i, file in enumerate(ordered_files):
 if len(contents) == 0:
     raise AttributeError('No contents - are you sure this header exists?')
 
+# Put everything together
+
 all_contents = '<h2>Summary - {}</h2>\n{}'.format(header_name, ''.join(contents))
-text_md = hm.markdownify(all_contents)
+text_md = hm.markdownify(all_contents)  # Convert html to markdown
+
+# Generate summary note
+
 filename = "{}/Summary: {}.md".format(report_folder, header_name)
 with open(filename, 'w') as f:
     f.write(text_md)
