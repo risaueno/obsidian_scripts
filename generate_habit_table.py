@@ -11,9 +11,9 @@ report_folder = '/Users/user/Obsidian/My Vault/Daily Summary'
 
 # Description
 # (1) Daily notes directory (note title must have year, month and day)
-# (2) Looks under the following header in each daily note (may not work well if it has sub-headers under it)
-# (3) Habits you want in the habit tracker table
-# (4) Summary of header will go here (saved as Summary - header_name.md)
+# (2) Look under this header in each daily note
+# (3) Habits you want displayed in the habit tracker table
+# (4) Summary of header will go here (saved as 'Summary - header_name.md')
 
 ####################################################
 
@@ -27,9 +27,6 @@ import markdownify as hm
 from tomark import Tomark
 import collections
 
-
-# Get info from daily directory
-
 def extract_content_from_header(html, header_name):
     partitions = html.partition('>{}<'.format(header_name))
     header_code = partitions[0][-3:] + '>'
@@ -37,9 +34,12 @@ def extract_content_from_header(html, header_name):
     return content
 
 
+# Get info from daily directory
+
 all_files = [entry.path for entry in os.scandir(daily_folder)]
+filenames = [file.partition(daily_folder + '/')[2] for file in all_files]
 try:
-    dates = [dparser.parse(file, fuzzy=True).strftime('%Y-%m-%d') for file in all_files]
+    dates = [dparser.parse(file, fuzzy=True).strftime('%Y-%m-%d') for file in filenames]
     sort_idx = np.argsort(dates)[::-1]
 except ValueError as e:
     raise Exception("Titles of daily files must contain dates") from e

@@ -15,8 +15,8 @@ compact_view = True
 
 # Description
 # (1) Name of header you want to summarise (make sure this exists in your dailies)
-# (2) Daily notes directory (note title must have full date info)
-# (3) Summary of header will go here (header_name.md)
+# (2) Daily notes directory (note title must have year, month and day)
+# (3) Summary of header will go here (saved as 'Summary - header_name.md')
 # (4) Display summary entries as transclusion (links to original entries).
 # Recommended for To do lists - checking boxes will also check it in the daily note and vice versa
 # If False, summary entries will consist of text copied (unlinked) from daily notes
@@ -56,8 +56,9 @@ def content_exists(html):
 # Get info from daily directory
 
 all_files = [entry.path for entry in os.scandir(daily_folder)]
+filenames = [file.partition(daily_folder + '/')[2] for file in all_files]
 try:
-    dates = [dparser.parse(file, fuzzy=True).strftime('%Y-%m-%d') for file in all_files]
+    dates = [dparser.parse(file, fuzzy=True).strftime('%Y-%m-%d') for file in filenames]
     sort_idx = np.argsort(dates)[::-1]
 except ValueError as e:
     raise Exception("Titles of daily files must contain dates") from e
