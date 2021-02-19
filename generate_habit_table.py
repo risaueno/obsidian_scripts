@@ -50,7 +50,7 @@ ordered_dates = [dates[i] for i in sort_idx]
 start_date = datetime.datetime.strptime(ordered_dates[-1], '%Y-%m-%d')
 end_date = datetime.datetime.strptime(ordered_dates[0], '%Y-%m-%d')
 all_dates = []
-for a in range((end_date - start_date).days):
+for a in range((end_date - start_date).days + 1):
     d = datetime.date(start_date.year, start_date.month, start_date.day) + datetime.timedelta(a)
     all_dates.append(d.strftime('%Y-%m-%d'))
 
