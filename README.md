@@ -1,4 +1,4 @@
-## Obsidian: Summarise daily entries
+## Obsidian: Summarise bullet journal style daily entries
 
 Python scripts to generate summary pages from historical daily notes by entries under headers (`generate_header_summary.py`) and generate a table to summarise tracked habits from daily notes (`generate_habit_table.py`).
 
