@@ -3,26 +3,40 @@
 # (1)
 header_name = 'To do'
 # (2)
-daily_folder = '/Users/user/Obsidian/My Vault/Daily'
+daily_folder = '/Users/user/Obsidian/My Vault/1_Journal/Daily'
 # (3)
-report_folder = '/Users/user/Obsidian/My Vault/Daily Summary'
+report_folder = '/Users/user/Obsidian/My Vault/1_Journal/Daily Summary'
 # (4)
 display_transclusion = True
 # (5)
-display_individual_dates = True
-# (6)
-compact_view = True
+display_type = 'dates'  # Choose from: 'dates', 'dates_compact', 'bullet'
 
 # Description
 # (1) Name of header you want to summarise (make sure this exists in your dailies)
-# (2) Daily notes directory (note title must have year, month and day)
-# (3) Summary of header will go here (saved as 'Summary - header_name.md')
+# (2) Daily notes directory (note title must have full date info)
+# (3) Summary of header will go here (header_name.md)
 # (4) Display summary entries as transclusion (links to original entries).
 # Recommended for To do lists - checking boxes will also check it in the daily note and vice versa
 # If False, summary entries will consist of text copied (unlinked) from daily notes
 # This is recommended for a cleaner diary view (but if summarising headers that has sub-headers, setting display_transclusion=True may generate a prettier report).
-# (5) Display date for each entry. Paragraphs in bullet points if False
-# (6) Entries on the same line as the dates (N/A for lists or multiple paragraphs)
+# (5) Display mode options (N/A for transclusion) - 'date': dated entries as headers, 'dates_compact': dates and contents in same line view, 'bullet': undated entries in bullet points (N/A for lists and multiple paragraphs)
+
+####################################################
+
+# Advanced settings (for using external inputs):
+# Usage (with 3 inputs): `python generate_header_summary.py header_name display_transclusion display_type`
+
+use_external_input = False
+
+if use_external_input:
+    import sys
+
+    # Set the variables you want to override with external inputs
+    header_name = sys.argv[1]  # Input 1
+    display_transclusion = True if sys.argv[2] == 'true' else False  # Input 2
+    display_type = sys.argv[3]  # Input 3
+
+    print("[{}, transclusion={}, display={}]".format(header_name, display_transclusion, display_type))
 
 ####################################################
 
@@ -84,7 +98,6 @@ if display_transclusion:
         html = markdown.markdown(f.read())
         content = extract_content_from_header(html, header_name)
 
-        # if len(content.replace('\n', '')) > 0:
         if content_exists(content):
 
             if last_year != this_year:
@@ -96,8 +109,10 @@ if display_transclusion:
             last_month = this_month
 
             filename = file.partition(daily_folder + '/')[2].partition('.md')[0]
-            if display_individual_dates:
+            if display_type == 'dates':
                 contents.append('##### {}\n'.format(dt))
+            elif display_type == 'dates_compact':
+                contents.append('{} \n'.format(dt))
             contents.append('![[{}#{}]]\n'.format(filename, header_name))
 
     # Put everything together
@@ -116,7 +131,6 @@ else:
 
         f = open(file, 'r')
         html = markdown.markdown(f.read())
-
         content = extract_content_from_header(html, header_name)
 
         # if len(content.replace('\n', '')) > 0:
@@ -130,20 +144,21 @@ else:
             last_year = this_year
             last_month = this_month
 
-            if display_individual_dates:
-                if compact_view:
-                    # Display on the same line if content is short
-                    if content.count('\n') <= 2 and content[:1] == '\n':
-                        content = content[1:]
-                    contents.append("<b>{}</b>: {}".format(dt, content))
-                    # contents.append("{}: {}".format(dt, content))
-                else:
-                    contents.append("<h4>{}</h4>{}\n".format(dt, content))
-            else:
+            if display_type == 'dates_compact':
+                # Display on the same line if content is short
+                if content.count('\n') <= 2 and content[:1] == '\n':
+                    content = content[1:]
+                contents.append("<b>{}</b>: {}".format(dt, content))
+
+            elif display_type == 'dates':
+                contents.append("<h4>{}</h4>{}\n".format(dt, content))
+            elif display_type == 'bullet':
                 # Convert paragraphs into bullet points
                 content = content.replace('<p>', '<ul>\n<li>')
                 content = content.replace('</p>', '</li>\n</ul>')
                 contents.append("{}\n".format(content))
+            else:
+                raise AttributeError("display_type = {} not recognised".format(display_type))
 
     if len(contents) == 0:
         raise AttributeError('No contents - are you sure this header exists?')
