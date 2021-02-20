@@ -2,7 +2,7 @@
 
 Python scripts to generate summary pages from historical daily notes by entries under headers (`generate_header_summary.py`) and generate a table to summarise tracked habits from daily notes (`generate_habit_table.py`).
 
-### Usage
+### How to use
 
 Python 3.7
 1. Install dependencies `pip install numpy markdownify Tomark`
@@ -16,3 +16,20 @@ Python 3.7
 - Early prototype for personal use and not tested extensively :)
 - Habit tracking only works for checked/unchecked boxes for now
 - Known bugs: A bullet point that starts with a #tag will not be displayed correctly with the non-transclusion option
+
+### Demo
+
+If your daily entries are generated from a template with set headers and look something like this:
+
+<img src='.images/daily_note_example.png' width=800>
+
+The scripts generates summary reports:
+
+- Example: Tick boxes from daily notes into monthly tables
+<img src='.images/habit_mood_tables.png' width=800>
+
+- Example: Summary of the 'Grateful' header in dailies, with or without dates
+<img src='.images/summary_copy_example.png' width=800>
+
+- Example: Simple copied list (left) vs. transclusion (right)
+<img src='.images/copy_vs_transclusion_example.png' width=800>
